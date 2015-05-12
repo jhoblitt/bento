@@ -101,6 +101,15 @@
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
       "vm_name": "{{ user `template` }}"
+    },
+    {
+      "ami_name": "centos 6 HVM vagrant {{timestamp}}"
+      "instance_type": "c4.2xlarge",
+      "region": "us-west-2",
+      "source_ami": "ami-81d092b1",
+      "ssh_username": "root",
+      "type": "amazon-ebs",
+      "vm_name": "{{ user `template` }}",
     }
   ],
   "post-processors": [
