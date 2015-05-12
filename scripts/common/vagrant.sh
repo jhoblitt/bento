@@ -1,5 +1,34 @@
 #!/bin/sh -eux
 
+if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
+    groupadd vagrant
+    useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
+
+    # the centos 6 image doesn't include cloud-init
+    yum install -y cloud-init
+
+    # check for centos 6 manual ssh key setup
+    grep 169.254.169.254 /etc/rc.local
+    if test $? -eq 0; then
+        # remove it...
+        cat > /etc/rc.local <END
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+END
+    fi
+
+    # change cloud-init default user to vagrant
+    sed -i -e 's/name: centos/name: vagrant/' /etc/cloud/cloud.cfg
+
+    # sudo
+    sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
+else
+
 # set a default HOME_DIR environment variable if not set
 HOME_DIR="${HOME_DIR:-/home/vagrant}";
 
@@ -17,3 +46,5 @@ else
 fi
 chown -R vagrant $HOME_DIR/.ssh;
 chmod -R go-rwsx $HOME_DIR/.ssh;
+
+fi

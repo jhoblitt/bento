@@ -1,5 +1,7 @@
 #!/bin/sh -eux
 
+if [[ "$PACKER_BUILDER_TYPE" != amazon* ]]; then
+
 swapuuid="`/sbin/blkid -o value -l -s UUID -t TYPE=swap`";
 
 if [ "x${swapuuid}" != "x" ]; then
@@ -16,3 +18,5 @@ rm -f /EMPTY;
 # Block until the empty file has been removed, otherwise, Packer
 # will try to kill the box while the disk is still full and that's bad
 sync;
+
+fi
