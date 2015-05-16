@@ -1,15 +1,41 @@
 #!/bin/sh -eux
 
 if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
+
+    if grep -q -i "CentOS release 6" /etc/redhat-release; then
+        # official centos 6 AMI is 6.5
+        yum clean all
+        yum distro-sync --releasever=6.6 -y
+
+        # the centos 6 image doesn't include cloud-init and
+        # cloud-utils-growpart is in epel instead of extras
+        yum install -y epel-release
+        yum clean all
+
+        yum install -y cloud-init cloud-utils-growpart dracut-modules-growroot
+        # force initramfs rebuild
+        # https://ask.openstack.org/en/question/58438/partition-is-not-expanding-even-with-cloud-init-during-first-boot/
+        # we may have just installed a newer kernel than is running but will
+        # used for the next boot
+        KERNEL=`rpm -q kernel | sort -V | tail -n1 | sed -r 's/^kernel-(.+)/\1/'`
+        dracut -f /boot/initramfs-${KERNEL}.img $KERNEL
+        lsinitrd /boot/initramfs-${KERNEL}.img | grep grow
+
+        yum erase -y epel-release
+        yum clean all
+    fi
+
+    if grep -q -i "CentOS Linux release 7" /etc/redhat-release; then
+        # official centos 7 AMI is 7.0.1406
+        yum clean all
+        yum distro-sync --releasever=7.1.1503 -y
+    fi
+
     groupadd vagrant
     useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
 
-    # the centos 6 image doesn't include cloud-init
-    yum install -y cloud-init
-
     # check for centos 6 manual ssh key setup
-    grep 169.254.169.254 /etc/rc.local
-    if test $? -eq 0; then
+    if grep -q 169.254.169.254 /etc/rc.local; then
         # remove it...
         cat > /etc/rc.local <END
 #!/bin/sh
