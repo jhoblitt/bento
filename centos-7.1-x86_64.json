@@ -105,11 +105,11 @@
     {
       "ami_name": "centos 7 HVM vagrant {{timestamp}}"
       "instance_type": "c4.2xlarge",
-      "region": "{{user `aws_region`}}",
+      "region": "{{user `aws_default_region`}}",
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "centos",
       "type": "amazon-ebs",
-      "vm_name": "{{ user `template` }}"
+      "vm_name": "{{ user `template` }}",
       "launch_block_device_mappings": [
         {
           "device_name": "/dev/sda1",
@@ -168,7 +168,7 @@
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-7.1-x86_64",
     "version": "2.1.TIMESTAMP"
-    "aws_region": "{{env `AWS_REGION`}}",
+    "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
     "source_ami": null
   }
 }
