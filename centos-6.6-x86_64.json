@@ -105,7 +105,7 @@
     {
       "ami_name": "centos 6 HVM vagrant {{timestamp}}"
       "instance_type": "c4.2xlarge",
-      "region": "{{user `aws_region`}}",
+      "region": "{{user `aws_default_region`}}",
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "root",
       "type": "amazon-ebs",
@@ -168,7 +168,7 @@
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-6.6-x86_64",
     "version": "2.1.TIMESTAMP"
-    "aws_region": "{{env `AWS_REGION`}}",
+    "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
     "source_ami": null
   }
 }
