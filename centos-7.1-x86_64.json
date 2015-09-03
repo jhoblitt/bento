@@ -103,7 +103,7 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "ami_name": "centos 7 HVM vagrant {{timestamp}}"
+      "ami_name": "centos 7 HVM vagrant {{timestamp}}",
       "instance_type": "c4.2xlarge",
       "region": "{{user `aws_default_region`}}",
       "source_ami": "{{user `source_ami`}}",
@@ -116,6 +116,29 @@
           "volume_type": "gp2"
         }
       ]
+    },
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 40960,
+      "format": "qcow2",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
+      "net_device": "virtio-net",
+      "output_directory": "packer-{{user `template`}}-qemu",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "type": "qemu",
+      "vm_name": "{{ user `template` }}"
     }
   ],
   "post-processors": [
@@ -167,9 +190,9 @@
     "name": "centos-7.1",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-7.1-x86_64",
-    "version": "2.1.TIMESTAMP"
+    "version": "2.1.TIMESTAMP",
     "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
-    "source_ami": null
+    "source_ami": "1"
   }
 }
 
