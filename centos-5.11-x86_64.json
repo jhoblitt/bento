@@ -101,21 +101,6 @@
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
       "vm_name": "{{ user `template` }}"
-    },
-    {
-      "ami_name": "centos 6 HVM vagrant {{timestamp}}"
-      "instance_type": "c4.2xlarge",
-      "region": "{{user `aws_default_region`}}",
-      "source_ami": "{{user `source_ami`}}",
-      "ssh_username": "root",
-      "type": "amazon-ebs",
-      "vm_name": "{{ user `template` }}",
-      "launch_block_device_mappings": [
-        {
-          "device_name": "/dev/sda1",
-          "volume_type": "gp2"
-        }
-      ]
     }
   ],
   "post-processors": [
@@ -168,8 +153,6 @@
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-5.11-x86_64",
     "version": "2.1.TIMESTAMP"
-    "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
-    "source_ami": null
   }
 }
 

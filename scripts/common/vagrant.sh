@@ -5,7 +5,7 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
     if grep -q -i "CentOS release 6" /etc/redhat-release; then
         # official centos 6 AMI is 6.5
         yum clean all
-        yum distro-sync --releasever=6.6 -y
+        yum distro-sync --releasever=6.7 -y
 
         # the centos 6 image doesn't include cloud-init and
         # cloud-utils-growpart is in epel instead of extras
@@ -37,7 +37,7 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
     # check for centos 6 manual ssh key setup
     if grep -q 169.254.169.254 /etc/rc.local; then
         # remove it...
-        cat > /etc/rc.local <END
+        cat > /etc/rc.local <<END
 #!/bin/sh
 #
 # This script will be executed *after* all the other init scripts.

@@ -103,7 +103,7 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "ami_name": "centos 7 HVM vagrant {{timestamp}}"
+      "ami_name": "centos 7 HVM vagrant {{timestamp}}",
       "instance_type": "c4.2xlarge",
       "region": "{{user `aws_default_region`}}",
       "source_ami": "{{user `source_ami`}}",
@@ -167,7 +167,7 @@
     "name": "centos-7.1",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-7.1-x86_64",
-    "version": "2.1.TIMESTAMP"
+    "version": "2.1.TIMESTAMP",
     "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
     "source_ami": null
   }
