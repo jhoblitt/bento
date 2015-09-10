@@ -120,6 +120,21 @@
       "ssh_wait_timeout": "10000s",
       "type": "qemu",
       "vm_name": "{{ user `template` }}"
+    },
+    {
+      "ami_name": "fedora 22 HVM vagrant {{timestamp}}",
+      "instance_type": "c4.2xlarge",
+      "region": "{{user `aws_default_region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_pty": true,
+      "ssh_username": "fedora",
+      "type": "amazon-ebs",
+      "ami_block_device_mappings": [
+        {
+          "device_name": "/dev/sda1",
+          "volume_type": "gp2"
+        }
+      ]
     }
   ],
   "post-processors": [
@@ -176,6 +191,8 @@
     "name": "fedora-22",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "fedora-22-x86_64",
-    "version": "2.0.TIMESTAMP"
+    "version": "2.0.TIMESTAMP",
+    "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
+    "source_ami": ""
   }
 }

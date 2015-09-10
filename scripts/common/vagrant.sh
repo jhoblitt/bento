@@ -59,6 +59,7 @@ END
 
     # change cloud-init default user to vagrant
     sed -i -e 's/name: centos/name: vagrant/' /etc/cloud/cloud.cfg
+    sed -i -e 's/name: fedora/name: vagrant/' /etc/cloud/cloud.cfg
 
     # sudo
     sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
