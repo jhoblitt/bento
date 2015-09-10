@@ -98,6 +98,21 @@
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
       "vm_name": "packer-fedora-22-x86_64"
+    },
+    {
+      "ami_name": "fedora 22 HVM vagrant {{timestamp}}",
+      "instance_type": "c4.2xlarge",
+      "region": "{{user `aws_default_region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_pty": true,
+      "ssh_username": "fedora",
+      "type": "amazon-ebs",
+      "ami_block_device_mappings": [
+        {
+          "device_name": "/dev/sda1",
+          "volume_type": "gp2"
+        }
+      ]
     }
   ],
   "post-processors": [
@@ -136,7 +151,9 @@
     "mirror": "http://download.fedoraproject.org/pub/fedora/linux",
     "name": "fedora-22",
     "template": "fedora-22-x86_64",
-    "version": "2.0.TIMESTAMP"
+    "version": "2.0.TIMESTAMP",
+    "aws_default_region": "{{env `AWS_DEFAULT_REGION`}}",
+    "source_ami": null
   }
 }
 
