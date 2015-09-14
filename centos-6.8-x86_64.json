@@ -112,14 +112,16 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
-      "output_directory": "packer-{{user `template`}}-qemu",
+      "output_directory": "packer-{{user `template`}}-qemu-{{user `build_timestamp`}}",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "qemu",
-      "vm_name": "{{ user `template` }}"
+      "vm_name": "{{ user `template` }}-{{user `build_timestamp`}}",
+      "format": "qcow2",
+      "headless": "{{ user `headless` }}"
     },
     {
       "ami_name": "centos 6 HVM vagrant {{timestamp}}",
@@ -140,7 +142,8 @@
   "post-processors": [
     {
       "output": "builds/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
+      "type": "vagrant",
+      "except": [ "qemu" ]
     }
   ],
   "provisioners": [

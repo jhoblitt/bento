@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
+if [[ "$PACKER_BUILDER_TYPE" == amazon* || "$PACKER_BUILDER_TYPE" == qemu* ]]; then
 
     if grep -q -i "CentOS release 6" /etc/redhat-release; then
         # official centos 6 AMI is 6.5
