@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
+if [[ "$PACKER_BUILDER_TYPE" == amazon* || "$PACKER_BUILDER_TYPE" == openstack* ]]; then
 
     if grep -q -i "CentOS release 6" /etc/redhat-release; then
         # official centos 6 AMI is 6.5
@@ -31,8 +31,8 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* ]]; then
         yum distro-sync --releasever=7.1.1503 -y
     fi
 
-    groupadd vagrant
-    useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
+    /usr/sbin/groupadd vagrant
+    /usr/sbin/useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
 
     # check for centos 6 manual ssh key setup
     if grep -q 169.254.169.254 /etc/rc.local; then

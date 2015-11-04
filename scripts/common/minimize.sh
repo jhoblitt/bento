@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-if [[ "$PACKER_BUILDER_TYPE" != amazon* && "$PACKER_BUILDER_TYPE" != qemu ]]; then
+if [[ "$PACKER_BUILDER_TYPE" != amazon* && "$PACKER_BUILDER_TYPE" != qemu && "$PACKER_BUILDER_TYPE" != openstack* ]]; then
 
 swapuuid="`/sbin/blkid -o value -l -s UUID -t TYPE=swap`";
 

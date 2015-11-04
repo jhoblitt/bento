@@ -1,6 +1,17 @@
 {
   "builders": [
     {
+      "type": "openstack",
+      "ssh_username": "centos",
+      "image_name": "centos-7-vagrant-{{timestamp}}",
+      "source_image": "49707b28-4597-40ea-af92-53282e4baa97",
+      "use_floating_ip": true,
+      "floating_ip_pool": "ext-net",
+      "security_groups": ["default", "remote SSH"],
+      "networks": ["fc77a88d-a9fb-47bb-a65d-39d1be7a7174"],
+      "flavor": "m1.medium"
+    },
+    {
       "boot_command": [
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
       ],
@@ -145,7 +156,7 @@
     {
       "output": "builds/{{user `box_basename`}}.{{.Provider}}.box",
       "type": "vagrant",
-      "except": [ "qemu" ]
+      "except": [ "qemu", "openstack" ]
     }
   ],
   "provisioners": [
