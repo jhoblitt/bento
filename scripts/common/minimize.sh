@@ -3,6 +3,7 @@
 case "$PACKER_BUILDER_TYPE" in
   qemu) exit 0 ;;
   amazon*) exit 0 ;;
+  openstack*) exit 0 ;;
 esac
 
 set +e
