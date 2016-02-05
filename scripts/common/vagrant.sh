@@ -29,6 +29,10 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* || "$PACKER_BUILDER_TYPE" == openstack* 
         # official centos 7 AMI is 7.0.1406
         yum clean all
         yum distro-sync --releasever=7.1.1503 -y
+
+        yum install -y cloud-init cloud-utils-growpart
+
+        yum clean all
     fi
 
     /usr/sbin/groupadd vagrant
