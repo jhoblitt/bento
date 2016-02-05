@@ -35,8 +35,11 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* || "$PACKER_BUILDER_TYPE" == openstack* 
         yum clean all
     fi
 
-    /usr/sbin/groupadd vagrant
-    /usr/sbin/useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
+    /usr/sbin/groupadd --force vagrant
+
+    if ! getent passwd vagrant > /dev/null 2>&1; then
+        /usr/sbin/useradd -d /home/vagrant -s /bin/bash -g vagrant -m vagrant
+    fi
 
     # check for centos 6 manual ssh key setup
     if grep -q 169.254.169.254 /etc/rc.local; then
