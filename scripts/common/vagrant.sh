@@ -34,6 +34,9 @@ if [[ "$PACKER_BUILDER_TYPE" == amazon* || "$PACKER_BUILDER_TYPE" == qemu* || "$
 
         yum install -y cloud-init cloud-utils-growpart
 
+        # remove NM -- breaks DNS setup on AWS
+        yum erase -y NetworkManager\*
+
         yum clean all
     fi
 
